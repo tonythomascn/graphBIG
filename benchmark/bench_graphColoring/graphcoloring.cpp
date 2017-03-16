@@ -183,8 +183,8 @@ void reset_graph(graph_t & g)
 //==============================================================//
 int main(int argc, char * argv[])
 {
-    graphBIG::print();
-    cout<<"Benchmark: kCore decomposition\n";
+//    graphBIG::print();
+//    cout<<"Benchmark: kCore decomposition\n";
     double t1, t2;
 
     argument_parser arg;
@@ -202,13 +202,14 @@ int main(int argc, char * argv[])
     size_t k,threadnum;
     arg.get_value("kcore",k);
     arg.get_value("threadnum",threadnum);
+    cout << threadnum << ",";
 #ifdef SIM
     arg.get_value("beginiter",beginiter);
     arg.get_value("enditer",enditer);
 #endif   
 
     graph_t graph;
-    cout<<"loading data... \n";
+//    cout<<"loading data... \n";
 
     t1 = timer::get_usec();
     string vfile = path + "/vertex.csv";
@@ -228,13 +229,14 @@ int main(int argc, char * argv[])
     size_t edge_num = graph.num_edges();
     t2 = timer::get_usec();
 
-    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
+//    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
     
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<t2-t1<<" sec\n\n";
+//    cout<<"== time: "<<t2-t1<<" sec\n\n";
+    cout << t2 - t1 << ",";
 #endif
 
-    cout<<"computing graph color...\n";
+//    cout<<"computing graph color...\n";
     
     gBenchPerf_multi perf_multi(threadnum, perf);
     unsigned run_num = ceil(perf.get_event_cnt() /(double) DEFAULT_PERF_GRP_SZ);
@@ -255,18 +257,19 @@ int main(int argc, char * argv[])
         if ((i+1)<run_num) reset_graph(graph);
     }
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
-    if (threadnum == 1)
-        perf.print();
-    else
-        perf_multi.print();
+    cout << elapse_time/run_num<<"\n";
+//    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
+//    if (threadnum == 1)
+//        perf.print();
+//    else
+//        perf_multi.print();
 #endif
 
 #ifdef ENABLE_OUTPUT
     cout<<"\n";
     output(graph);
 #endif
-    cout<<"==================================================================\n";
+//    cout<<"==================================================================\n";
     return 0;
 }  // end main
 
