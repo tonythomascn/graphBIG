@@ -1,0 +1,17 @@
+#!/bin/bash
+#declare -a dataset=("1k" "10k" "100k" "1000k" "500M" "1G" "2G" "4G" "8G")
+declare -a dataset=("CA_RoadNet" "Knowledge_Repo" "Watson_Gene")
+
+rm -rf log
+mkdir -p log
+for data in "${dataset[@]}"
+do
+  for var in 1 2 4 8 16 32 64 128 256 512
+  do
+      ./connectedcomponent --threadnum $var \
+      --dataset $HOME/graph_data/friendster/$data \
+      >> log/$data.csv ;
+  done
+done
+
+tar czf cc.tar.gz log/
