@@ -332,10 +332,10 @@ int main(int argc, char * argv[])
 #ifndef ENABLE_VERIFY
 //    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
     cout << elapse_time/run_num << "\n";
-    if (threadnum == 1)
-        perf.print();
-    else
-        perf_multi.print();
+//    if (threadnum == 1)
+//        perf.print();
+//    else
+//        perf_multi.print();
 #endif
 
 #ifdef ENABLE_OUTPUT
