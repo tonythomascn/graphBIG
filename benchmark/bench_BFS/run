@@ -5,6 +5,8 @@ rm -rf log
 mkdir -p log
 for data in "${dataset[@]}" ;
 do
+  touch log/$data.csv
+  echo "threadnum,loadingtime,time" > log/$data.csv
   for var in 1 2 4 8 16 32 64 128 256 512 ;
   do
       ./bfs --threadnum $var \
