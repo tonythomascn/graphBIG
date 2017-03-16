@@ -166,8 +166,8 @@ void reset_graph(graph_t & g)
 
 int main(int argc, char * argv[])
 {
-    graphBIG::print();
-    cout<<"Benchmark: Degree Centrality\n";
+//    graphBIG::print();
+//    cout<<"Benchmark: Degree Centrality\n";
 
     argument_parser arg;
     gBenchPerf_event perf;
@@ -182,6 +182,7 @@ int main(int argc, char * argv[])
 
     size_t threadnum;
     arg.get_value("threadnum",threadnum);
+    cout << threadnum << ",";
 #ifdef SIM
     arg.get_value("beginiter",beginiter);
     arg.get_value("enditer",enditer);
@@ -189,7 +190,7 @@ int main(int argc, char * argv[])
 
     double t1, t2;
     graph_t graph;
-    cout<<"loading data... \n";
+//    cout<<"loading data... \n";
     t1 = timer::get_usec();
     string vfile = path + "/vertex.csv";
     string efile = path + "/edge.csv";
@@ -207,12 +208,13 @@ int main(int argc, char * argv[])
     size_t vertex_num = graph.num_vertices();
     size_t edge_num = graph.num_edges();
     t2 = timer::get_usec();
-    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
+//    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<t2-t1<<" sec\n";
+//    cout<<"== time: "<<t2-t1<<" sec\n";
+    cout << t2 - t1 << ",";
 #endif
 
-    cout<<"\ncomputing DC for all vertices...\n";
+//    cout<<"\ncomputing DC for all vertices...\n";
 
     gBenchPerf_multi perf_multi(threadnum, perf);
     unsigned run_num = ceil(perf.get_event_cnt() / (double)DEFAULT_PERF_GRP_SZ);
@@ -237,16 +239,17 @@ int main(int argc, char * argv[])
     uint64_t indegree_max, indegree_min, outdegree_max, outdegree_min;
     degree_analyze(graph, indegree_max, indegree_min, outdegree_max, outdegree_min);
 
-    cout<<"DC finish: \n";
-    cout<<"== inDegree[Max-"<<indegree_max<<" Min-"<<indegree_min
-        <<"]  outDegree[Max-"<<outdegree_max<<" Min-"<<outdegree_min
-        <<"]"<<endl;
+//    cout<<"DC finish: \n";
+//    cout<<"== inDegree[Max-"<<indegree_max<<" Min-"<<indegree_min
+//        <<"]  outDegree[Max-"<<outdegree_max<<" Min-"<<outdegree_min
+//        <<"]"<<endl;
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
-    if (threadnum == 1)
-        perf.print();
-    else
-        perf_multi.print();
+    cout << elapse_time/run_num << "\n";
+//    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
+//    if (threadnum == 1)
+//        perf.print();
+//    else
+//        perf_multi.print();
 
 #endif
 
@@ -254,7 +257,7 @@ int main(int argc, char * argv[])
     cout<<endl;
     output(graph);
 #endif
-    cout<<"==================================================================\n";
+//    cout<<"==================================================================\n";
     return 0;
 }  // end main
 
