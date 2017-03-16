@@ -252,8 +252,8 @@ void reset_graph(graph_t & g)
 //==============================================================//
 int main(int argc, char * argv[])
 {
-    graphBIG::print();
-    cout<<"Benchmark: BFS\n";
+//    graphBIG::print();
+//    cout<<"Benchmark: BFS\n";
 
     argument_parser arg;
     gBenchPerf_event perf;
@@ -279,7 +279,7 @@ int main(int argc, char * argv[])
     graph_t graph;
     double t1, t2;
 
-    cout<<"loading data... \n";    
+//    cout<<"loading data... \n";    
     t1 = timer::get_usec();
     string vfile = path + "/vertex.csv";
     string efile = path + "/edge.csv";
@@ -297,15 +297,16 @@ int main(int argc, char * argv[])
     size_t vertex_num = graph.vertex_num();
     size_t edge_num = graph.edge_num();
     t2 = timer::get_usec();
-    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
+//    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
 
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<t2-t1<<" sec\n";
+//    cout<<"== time: "<<t2-t1<<" sec\n";
+      cout << t2 - t1 << ",";
 #endif
 
     BFSVisitor vis;
 
-    cout<<"\nBFS root: "<<root<<"\n";
+//    cout<<"\nBFS root: "<<root<<"\n";
     
     gBenchPerf_multi perf_multi(threadnum, perf);
     unsigned run_num = ceil(perf.get_event_cnt() /(double) DEFAULT_PERF_GRP_SZ);
@@ -325,10 +326,11 @@ int main(int argc, char * argv[])
         elapse_time += t2-t1;
         if ((i+1)<run_num) reset_graph(graph);
     }
-    cout<<"BFS finish: \n";
+//    cout<<"BFS finish: \n";
 
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
+//    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
+    cout << elapse_time/run_num << "\n";
     if (threadnum == 1)
         perf.print();
     else
@@ -340,7 +342,7 @@ int main(int argc, char * argv[])
     output(graph);
 #endif
 
-    cout<<"=================================================================="<<endl;
+//    cout<<"=================================================================="<<endl;
     return 0;
 }  // end main
 
