@@ -270,6 +270,7 @@ int main(int argc, char * argv[])
     size_t root,threadnum;
     arg.get_value("root",root);
     arg.get_value("threadnum",threadnum);
+    cout << threadnum << ",";
 #ifdef SIM
     arg.get_value("beginiter",beginiter);
     arg.get_value("enditer",enditer);
