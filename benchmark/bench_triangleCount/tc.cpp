@@ -315,8 +315,8 @@ void reset_graph(graph_t & g)
 
 int main(int argc, char * argv[])
 {
-    graphBIG::print();
-    cout<<"Benchmark: triangle count\n";
+//    graphBIG::print();
+//    cout<<"Benchmark: triangle count\n";
 
     argument_parser arg;
     gBenchPerf_event perf;
@@ -332,6 +332,7 @@ int main(int argc, char * argv[])
 
     size_t threadnum;
     arg.get_value("threadnum",threadnum);
+    cout << threadnum << ",";
     arg.get_value("maxiter",maxiter);
 #ifdef SIM
     arg.get_value("beginiter",beginiter);
@@ -341,7 +342,7 @@ int main(int argc, char * argv[])
     double t1, t2;
     graph_t graph;
 
-    cout<<"loading data... \n";
+//    cout<<"loading data... \n";
     t1 = timer::get_usec();
     string vfile = path + "/vertex.csv";
     string efile = path + "/edge.csv";
@@ -359,25 +360,26 @@ int main(int argc, char * argv[])
     uint64_t vertex_num = graph.num_vertices();
     uint64_t edge_num = graph.num_edges();
     t2 = timer::get_usec();
-    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
+//    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<t2-t1<<" sec\n";
+    cout << t2 - t1 << ",";
+//    cout<<"== time: "<<t2-t1<<" sec\n";
 #endif
 
-    cout<<"\npreparing neighbor sets..."<<endl;
+//    cout<<"\npreparing neighbor sets..."<<endl;
     vector<unsigned> workset;
     if (threadnum==1)
         tc_init(graph);
     else
     {
         parallel_tc_init(graph, threadnum);
-        cout<<"preparing workset..."<<endl;
+//        cout<<"preparing workset..."<<endl;
         //parallel_workset_init(graph, workset, arguments.threadnum);
         gen_workset(graph, workset, threadnum);
     }
 
-    if (maxiter != 0) cout<<"\nmax iteration: "<<maxiter;
-    cout<<"\ncomputing triangle count..."<<endl;
+//    if (maxiter != 0) cout<<"\nmax iteration: "<<maxiter;
+//    cout<<"\ncomputing triangle count..."<<endl;
     size_t tcount;
 
     gBenchPerf_multi perf_multi(threadnum, perf);
@@ -398,20 +400,21 @@ int main(int argc, char * argv[])
         elapse_time += t2 - t1;
         if ((i+1)<run_num) reset_graph(graph);
     }
-    cout<<"== total triangle count: "<<tcount<<endl;
+//    cout<<"== total triangle count: "<<tcount<<endl;
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
-    if (threadnum == 1)
-        perf.print();
-    else
-        perf_multi.print();
+    cout << elapse_time/run_num<<"\n";
+//    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
+//    if (threadnum == 1)
+//        perf.print();
+//    else
+//        perf_multi.print();
 #endif
 
 #ifdef ENABLE_OUTPUT
     cout<<endl;
     output(graph);
 #endif
-    cout<<"==================================================================\n";
+//    cout<<"==================================================================\n";
     return 0;
 }  // end main
 
