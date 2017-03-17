@@ -251,8 +251,8 @@ void reset_graph(graph_t & g)
 //==============================================================//
 int main(int argc, char * argv[])
 {
-    graphBIG::print();
-    cout<<"Benchmark: sssp shortest path\n";
+//    graphBIG::print();
+//    cout<<"Benchmark: sssp shortest path\n";
     double t1, t2;
 
     argument_parser arg;
@@ -270,10 +270,10 @@ int main(int argc, char * argv[])
     size_t root,threadnum;
     arg.get_value("root",root);
     arg.get_value("threadnum",threadnum);
-
+    cout << threadnum << ",";
 
     graph_t graph;
-    cout<<"loading data... \n";
+//    cout<<"loading data... \n";
 
     t1 = timer::get_usec();
     string vfile = path + "/vertex.csv";
@@ -292,9 +292,10 @@ int main(int argc, char * argv[])
     size_t vertex_num = graph.num_vertices();
     size_t edge_num = graph.num_edges();
     t2 = timer::get_usec();
-    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
+//    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<t2-t1<<" sec\n\n";
+    cout << t2 - t1 << ",";
+//    cout<<"== time: "<<t2-t1<<" sec\n\n";
 #endif
 
 
@@ -306,8 +307,8 @@ int main(int argc, char * argv[])
     }
 
  
-    cout<<"Shortest Path: source-"<<root;
-    cout<<"...\n";
+//    cout<<"Shortest Path: source-"<<root;
+//    cout<<"...\n";
 
     gBenchPerf_multi perf_multi(threadnum, perf);
     unsigned run_num = ceil(perf.get_event_cnt() /(double) DEFAULT_PERF_GRP_SZ);
@@ -328,11 +329,12 @@ int main(int argc, char * argv[])
         if ((i+1)<run_num) reset_graph(graph);
     }
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
-    if (threadnum == 1)
-        perf.print();
-    else
-        perf_multi.print();
+    cout << elapse_time/run_num<<"\n";
+//    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
+//    if (threadnum == 1)
+//        perf.print();
+//    else
+//        perf_multi.print();
 #endif
 
 
@@ -341,7 +343,7 @@ int main(int argc, char * argv[])
     output(graph);
 #endif
 
-    cout<<"==================================================================\n";
+//    cout<<"==================================================================\n";
     return 0;
 }  // end main
 
