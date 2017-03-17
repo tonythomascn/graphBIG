@@ -1,0 +1,16 @@
+#!/bin/bash
+# declare -a dataset=("1k" "10k" "100k" "1000k" "500M" "1G" "2G" "4G" "8G")
+declare -a dataset=("1k" "10k" "100k" "1000k" "CA_RoadNet" "Knowledge_Repo" "Watson_Gene")
+
+rm -rf log
+mkdir -p log
+for data in "${dataset[@]}"
+do
+  touch log/$data.csv
+  echo "loadingtime,time" > log/$data.csv
+  ./dfs \
+  --dataset $HOME/graph_data/friendster/$data \
+  >> log/$data.csv ;
+done
+
+tar czf dfs.tar.gz log 
