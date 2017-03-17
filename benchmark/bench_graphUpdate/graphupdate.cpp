@@ -114,8 +114,8 @@ void output(graph_t& g)
 //==============================================================//
 int main(int argc, char * argv[])
 {
-    graphBIG::print();
-    cout<<"Benchmark: Graph update\n";
+//    graphBIG::print();
+//    cout<<"Benchmark: Graph update\n";
     
     argument_parser arg;
     gBenchPerf_event perf;
@@ -129,6 +129,7 @@ int main(int argc, char * argv[])
     arg.get_value("dataset",path);
     arg.get_value("separator",separator);
     arg.get_value("threadnum",threadnum);
+    cout << threadnum << ",";
     size_t delete_num;
     arg.get_value("delete",delete_num);
 
@@ -139,8 +140,8 @@ int main(int argc, char * argv[])
     for (unsigned i=0;i<run_num;i++)
     {
 #ifndef ENABLE_VERIFY
-        cout<<"\nRun #"<<i<<endl;
-        cout<<"loading data... \n";
+//        cout<<"\nRun #"<<i<<endl;
+//        cout<<"loading data... \n";
 #endif
         srand(SEED); // fix seed to avoid runtime dynamics
         graph_t g;
@@ -160,10 +161,11 @@ int main(int argc, char * argv[])
 #endif
         t2 = timer::get_usec();
 
-        if (i==0)
-            cout<<"== "<<g.num_vertices()<<" vertices  "<<g.edge_num()<<" edges\n\n";
+//        if (i==0)
+//            cout<<"== "<<g.num_vertices()<<" vertices  "<<g.edge_num()<<" edges\n\n";
 #ifndef ENABLE_VERIFY
-        cout<<"== time: "<<t2-t1<<" sec\n\n";
+    cout << t2 - t1 << ",";
+//        cout<<"== time: "<<t2-t1<<" sec\n\n";
 #endif
 
         vector<uint64_t> IDs;
@@ -174,21 +176,24 @@ int main(int argc, char * argv[])
             return -1;
         }
 
-        t1 = timer::get_usec();
+        //t1 = timer::get_usec();
         perf.open(i);
         perf.start(i);
+        t1 = timer::get_usec();
 
         graph_update(g, IDs);
 
-        perf.stop(i);
         t2 = timer::get_usec();
-        if (i==(run_num-1))
-        {
-            cout<<"graph update finish: \n";
-            cout<<"== "<<g.num_vertices()<<" vertices  "<<g.num_edges()<<" edges\n";
-        }
+        perf.stop(i);
+       // t2 = timer::get_usec();
+//        if (i==(run_num-1))
+//        {
+//            cout<<"graph update finish: \n"            cout<<"== "<<g.num_vertices()<<" vertices  "<<g.num_edges()<<" edges\n";
+//            cout<<"== "<<g.num_vertices()<<" vertices  "<<g.num_edges()<<" edges\n";
+//        }
 #ifndef ENABLE_VERIFY
-        cout<<"== time: "<<t2-t1<<" sec\n";
+    cout << t2 - t1 << "\n"; 
+//        cout<<"== time: "<<t2-t1<<" sec\n";
 #else
         (void)t1;
         (void)t2;
@@ -198,10 +203,10 @@ int main(int argc, char * argv[])
 #endif
     }
 #ifndef ENABLE_VERIFY
-    perf.print();
+//    perf.print();
 #endif
 
-    cout<<"==================================================================\n";
+//    cout<<"==================================================================\n";
     return 0;
 }  // end main
 
