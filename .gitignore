@@ -70,3 +70,7 @@ tools/libpfm-4.6.0
 
 # ignore csv file
 *.csv
+
+# ignore tar.gz file
+*.tar
+*.gz
