@@ -1,0 +1,16 @@
+#!/bin/bash
+#declare -a dataset=("1k" "10k" "100k" "1000k" "500M" "1G" "2G" "4G" "8G")
+declare -a dataset=("1k" "10k" "100k" "1000k" "CA_RoadNet" "Knowledge_Repo" "Watson_Gene")
+declare -a prg=("connected_comp")
+ 
+for prog in "${prg[@]}" ;
+do
+    rm -rf log$prog
+    mkdir -p log$prog
+    for data in "${dataset[@]}" ;
+    do
+      touch log$prog/$data.csv
+      echo "loadingtime,time" > log$prog/$data.csv
+      ./$prog --dataset $HOME/graph_data/friendster/$data >> log$prog/$data.csv ;
+    done
+done
