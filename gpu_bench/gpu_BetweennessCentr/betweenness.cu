@@ -196,9 +196,10 @@ void cuda_betweenness_centr(uint64_t * vertexlist,
     cudaEventSynchronize(stop_event);
     cudaEventElapsedTime(&d2h_copy_time, start_event, stop_event);
 #ifndef ENABLE_VERIFY
-    printf("== host->device copy time: %f ms\n", h2d_copy_time);
-    printf("== device->host copy time: %f ms\n", d2h_copy_time);
-    printf("== kernel time: %f ms\n", kernel_time);
+printf("%f,", kernel_time / 1000);
+//    printf("== host->device copy time: %f ms\n", h2d_copy_time);
+//    printf("== device->host copy time: %f ms\n", d2h_copy_time);
+//    printf("== kernel time: %f ms\n", kernel_time);
 #endif
     cudaEventDestroy(start_event);
     cudaEventDestroy(stop_event);
