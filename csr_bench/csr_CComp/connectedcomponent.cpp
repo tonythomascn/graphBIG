@@ -52,7 +52,7 @@ unsigned seq_CC(
     unsigned ret = 0;
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== initialization time: "<<t2-t1<<" sec\n";
+//    cout<<"== initialization time: "<<t2-t1<<" sec\n";
 #else
     (void)t1;
     (void)t2;
@@ -105,7 +105,7 @@ unsigned seq_CC(
 #endif
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== traversal time: "<<t2-t1<<" sec\n";
+//    cout<<"== traversal time: "<<t2-t1<<" sec\n";
 #endif
     return ret;
 }
@@ -252,7 +252,7 @@ unsigned parallel_CC(
     vector<vector<uint64_t> > global_output_tasks(threadnum*threadnum);
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== initialization time: "<<t2-t1<<" sec\n";
+//    cout<<"== initialization time: "<<t2-t1<<" sec\n";
 #else
     (void)t1;
     (void)t2;
@@ -388,7 +388,7 @@ unsigned parallel_CC(
 #endif
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== traversal time: "<<t2-t1<<" sec\n";
+//    cout<<"== traversal time: "<<t2-t1<<" sec\n";
 #endif
     return ret;
 }
