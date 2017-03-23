@@ -1,0 +1,18 @@
+#!/bin/bash
+declare -a dataset=("1k" "10k" "100k" "1000k" "CA_RoadNet" "Knowledge_Repo" "Watson_Gene")
+
+rm -rf log
+mkdir -p log
+for data in "${dataset[@]}"
+do
+  touch log/$data.csv
+  echo "threadnum,loadingtime,time" > log/$data.csv
+  for var in 1 2 4 8 16 32 64 128 256 512
+  do
+    ./csr_sssp --threadnum $var \
+    --dataset $HOME/graph_data/friendster/$data \
+    >> log/$data.csv ;
+  done
+done
+
+tar czf sssp_csr_gcc.tar.gz log* 
