@@ -14,3 +14,5 @@ do
       ./$prog --dataset $HOME/graph_data/friendster/$data >> log$prog/$data.csv ;
     done
 done
+
+tar czf bfs_gpu.tar.gz log*
