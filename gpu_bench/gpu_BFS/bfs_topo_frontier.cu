@@ -193,11 +193,11 @@ void cuda_BFS(uint64_t * vertexlist,
     cudaEventSynchronize(stop_event);
     cudaEventElapsedTime(&d2h_copy_time, start_event, stop_event);
 
-    printf("== iteration #: %d\n", k);
+//    printf("== iteration #: %d\n", k);
 #ifndef ENABLE_VERIFY
-    printf("== host->device copy time: %f ms\n", h2d_copy_time);
-    printf("== device->host copy time: %f ms\n", d2h_copy_time);
-    printf("== kernel time: %f ms\n", kernel_time);
+//    printf("== host->device copy time: %f ms\n", h2d_copy_time);
+//    printf("== device->host copy time: %f ms\n", d2h_copy_time);
+//    printf("== kernel time: %f ms\n", kernel_time);
 #endif
     cudaEventDestroy(start_event);
     cudaEventDestroy(stop_event);
