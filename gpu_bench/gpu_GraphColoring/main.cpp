@@ -53,8 +53,8 @@ void output(vector<uint32_t> & vproplist)
 //==============================================================//
 int main(int argc, char * argv[])
 {
-    graphBIG::print();
-    cout<<"Benchmark: GPU Graph Coloring\n";
+//    graphBIG::print();
+//    cout<<"Benchmark: GPU Graph Coloring\n";
 
     argument_parser arg;
     gBenchPerf_event perf;
@@ -68,7 +68,7 @@ int main(int argc, char * argv[])
 
     double t1, t2;
 
-    cout<<"loading data... \n";
+//    cout<<"loading data... \n";
 
     t1 = timer::get_usec();
     size_t vertex_num, edge_num;
@@ -92,10 +92,11 @@ int main(int argc, char * argv[])
 #endif    
     t2 = timer::get_usec();
 
-    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
+//    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
     
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<t2-t1<<" sec\n";
+    cout << t2 - t1 << ",";
+//    cout<<"== time: "<<t2-t1<<" sec\n";
 #else
     (void)t1;
     (void)t2;
@@ -117,10 +118,11 @@ int main(int argc, char * argv[])
     t2 = timer::get_usec();
     
 
-    cout<<"\nGPU Graph Coloring finish: \n";
-    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
+//    cout<<"\nGPU Graph Coloring finish: \n";
+//    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<t2-t1<<" sec\n";
+    cout << t2 - t1 << "\n";
+//    cout<<"== time: "<<t2-t1<<" sec\n";
 #endif
 
 #ifdef ENABLE_OUTPUT
@@ -128,7 +130,7 @@ int main(int argc, char * argv[])
     output(vproplist);
 #endif
 
-    cout<<"==================================================================\n";
+//    cout<<"==================================================================\n";
     return 0;
 }  // end main
 
