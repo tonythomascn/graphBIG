@@ -46,7 +46,7 @@ void seq_degree_centr(
 
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== initialization time: "<<t2-t1<<" sec\n";
+//    cout<<"== initialization time: "<<t2-t1<<" sec\n";
 #else
     (void)t1;
     (void)t2;
@@ -77,7 +77,7 @@ void seq_degree_centr(
 #endif
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== process time: "<<t2-t1<<" sec\n";
+//    cout<<"== process time: "<<t2-t1<<" sec\n";
 #endif
 }
 struct arg_t
@@ -152,7 +152,7 @@ void parallel_degree_centr(
 
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== initialization time: "<<t2-t1<<" sec\n";
+//    cout<<"== initialization time: "<<t2-t1<<" sec\n";
 #else
     (void)t1;
     (void)t2;
@@ -234,7 +234,7 @@ void parallel_degree_centr(
 #endif
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== process time: "<<t2-t1<<" sec\n";
+//    cout<<"== process time: "<<t2-t1<<" sec\n";
 #endif
 }
 
