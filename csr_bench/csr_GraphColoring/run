@@ -9,7 +9,7 @@ do
   echo "threadnum,loadingtime,time" > log/$data.csv
   for var in 1 2 4 8 16 32 64 128 256 512
   do
-    ./csr_csr_graphcoloring --threadnum $var \
+    ./csr_graphcoloring --threadnum $var \
     --dataset $HOME/graph_data/friendster/$data \
     >> log/$data.csv ;
   done
