@@ -114,7 +114,7 @@ unsigned seq_kcore(
     seq_init(vertexlist,vproplist,vertex_cnt,kcore,removed,remove_cnt,process_q);
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== initialization time: "<<t2-t1<<" sec\n";
+//    cout<<"== initialization time: "<<t2-t1<<" sec\n";
 #else
     (void)t1;
     (void)t2;
@@ -125,7 +125,7 @@ unsigned seq_kcore(
             kcore,removed,remove_cnt,process_q);
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== processing time: "<<t2-t1<<" sec\n";
+//   cout<<"== processing time: "<<t2-t1<<" sec\n";
 #endif
     return remove_cnt;
 }
@@ -261,12 +261,12 @@ unsigned parallel_kcore(
     
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== initialization time: "<<t2-t1<<" sec\n";
+//    cout<<"== initialization time: "<<t2-t1<<" sec\n";
 #else
     (void)t1;
     (void)t2;
 #endif
-    cout<<"== init remove#: "<<remove_cnt<<endl;
+//    cout<<"== init remove#: "<<remove_cnt<<endl;
 
     t1 = timer::get_usec();
     
@@ -379,7 +379,7 @@ unsigned parallel_kcore(
 #endif
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== processing time: "<<t2-t1<<" sec\n";
+//    cout<<"== processing time: "<<t2-t1<<" sec\n";
 #endif
     return remove_cnt;
 }
