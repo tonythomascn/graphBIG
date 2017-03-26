@@ -56,7 +56,7 @@ void seq_graph_coloring(
     
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== initialization time: "<<t2-t1<<" sec\n";
+ //   cout<<"== initialization time: "<<t2-t1<<" sec\n";
 #else
     (void)t1;
     (void)t2;
@@ -218,7 +218,7 @@ void parallel_graph_coloring(
     
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== initialization time: "<<t2-t1<<" sec\n";
+//    cout<<"== initialization time: "<<t2-t1<<" sec\n";
 #else
     (void)t1;
     (void)t2;
@@ -341,7 +341,7 @@ void parallel_graph_coloring(
 #endif
     t2 = timer::get_usec();
 #ifndef ENABLE_VERIFY
-    cout<<"== traversal time: "<<t2-t1<<" sec\n";
+//    cout<<"== traversal time: "<<t2-t1<<" sec\n";
 #endif
 }
 

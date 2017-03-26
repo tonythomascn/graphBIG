@@ -57,8 +57,8 @@ void output(vector<uint16_t> & vproplist)
 //==============================================================//
 int main(int argc, char * argv[])
 {
-    graphBIG::print();
-    cout<<"Benchmark: Graph Coloring\n";
+//    graphBIG::print();
+//    cout<<"Benchmark: Graph Coloring\n";
 
     argument_parser arg;
 #ifndef NO_PERF    
@@ -81,10 +81,10 @@ int main(int argc, char * argv[])
 
     size_t threadnum;
     arg.get_value("threadnum",threadnum);
-
+    cout << threadnum << ",";
     double t1, t2;
     
-    cout<<"loading data... \n";
+//    cout<<"loading data... \n";
 
     t1 = timer::get_usec();
     string vfile = path + "/vertex.CSR";
@@ -99,10 +99,11 @@ int main(int argc, char * argv[])
 
     t2 = timer::get_usec();
 
-    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
+//    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
     
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<t2-t1<<" sec\n";
+     cout << t2 - t1 << ",";
+//    cout<<"== time: "<<t2-t1<<" sec\n";
 #else
     (void)t1;
     (void)t2;
@@ -127,11 +128,12 @@ int main(int argc, char * argv[])
     t2 = timer::get_usec();
     
 
-    cout<<"\nGraph Coloring finish: \n";
-    cout<<"== thread num: "<<threadnum<<endl;
-    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
+//    cout<<"\nGraph Coloring finish: \n";
+//    cout<<"== thread num: "<<threadnum<<endl;
+//    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
 #ifndef ENABLE_VERIFY
-    cout<<"== time: "<<t2-t1<<" sec\n";
+    cout << t2 - t1 << "\n";
+//    cout<<"== time: "<<t2-t1<<" sec\n";
 #endif
 
 #ifdef ENABLE_OUTPUT
@@ -139,7 +141,7 @@ int main(int argc, char * argv[])
     output(vproplist);
 #endif
 
-    cout<<"==================================================================\n";
+//    cout<<"==================================================================\n";
     return 0;
 }  // end main
 
