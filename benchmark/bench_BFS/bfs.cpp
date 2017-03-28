@@ -270,7 +270,7 @@ int main(int argc, char * argv[])
     size_t root,threadnum;
     arg.get_value("root",root);
     arg.get_value("threadnum",threadnum);
-    cout << threadnum << ",";
+    //cout << threadnum << ",";
 #ifdef SIM
     arg.get_value("beginiter",beginiter);
     arg.get_value("enditer",enditer);
@@ -299,10 +299,10 @@ int main(int argc, char * argv[])
     size_t edge_num = graph.edge_num();
     t2 = timer::get_usec();
 //    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
-
+    double loading_time = t2 - t1;
 #ifndef ENABLE_VERIFY
 //    cout<<"== time: "<<t2-t1<<" sec\n";
-      cout << t2 - t1 << ",";
+//      cout << loading_time << ",";
 #endif
 
     BFSVisitor vis;
@@ -314,18 +314,30 @@ int main(int argc, char * argv[])
     if (run_num==0) run_num = 1;
     double elapse_time = 0;
     
-    for (unsigned i=0;i<run_num;i++)
+    //Scale the thread num from 1 to 2^10
+    for (unsigned j = 0; j < 11; j++)
     {
-        t1 = timer::get_usec();
+        //reset elapse_time for each thread num config
+        elapse_time = 0;
+        threadnum = (int) pow(2, j);
+        cout << threadnum << ",";
+        
+        for (unsigned i=0;i<run_num;i++)
+        {
+          t1 = timer::get_usec();
 
-        if (threadnum==1)
-            bfs(graph, root, vis, perf, i);
-        else
-            parallel_bfs(graph, root, threadnum, perf_multi, i);
+          if (threadnum==1)
+             bfs(graph, root, vis, perf, i);
+          else
+             parallel_bfs(graph, root, threadnum, perf_multi, i);
 
-        t2 = timer::get_usec();
-        elapse_time += t2-t1;
-        if ((i+1)<run_num) reset_graph(graph);
+          t2 = timer::get_usec();
+          elapse_time += t2-t1;
+          if ((i+1)<run_num) reset_graph(graph);
+        }
+        cout << loading_time << "," << elapse_time/run_num << endl;
+        //after each run, reset graph
+        reset_graph(graph);
     }
 //    cout<<"BFS finish: \n";
 
