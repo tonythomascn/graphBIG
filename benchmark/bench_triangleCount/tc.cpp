@@ -370,7 +370,7 @@ int main(int argc, char * argv[])
     for (unsigned j = 0; j < 11; j++)
     {
         //reset elapse_time for each thread num config
-        elapse_time = 0;
+        double elapse_time = 0;
         threadnum = (int) pow(2, j);
         cout << threadnum << ",";
         
@@ -394,7 +394,7 @@ int main(int argc, char * argv[])
     gBenchPerf_multi perf_multi(threadnum, perf);
     unsigned run_num = ceil(perf.get_event_cnt() /(double) DEFAULT_PERF_GRP_SZ);
     if (run_num==0) run_num = 1;
-    double elapse_time = 0;
+    elapse_time = 0;
     
     for (unsigned i=0;i<run_num;i++)
     {
