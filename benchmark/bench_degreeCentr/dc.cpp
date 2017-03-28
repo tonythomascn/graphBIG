@@ -182,7 +182,7 @@ int main(int argc, char * argv[])
 
     size_t threadnum;
     arg.get_value("threadnum",threadnum);
-    cout << threadnum << ",";
+//    cout << threadnum << ",";
 #ifdef SIM
     arg.get_value("beginiter",beginiter);
     arg.get_value("enditer",enditer);
@@ -208,10 +208,11 @@ int main(int argc, char * argv[])
     size_t vertex_num = graph.num_vertices();
     size_t edge_num = graph.num_edges();
     t2 = timer::get_usec();
+    double loading_time = t2 - t1;
 //    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
 #ifndef ENABLE_VERIFY
 //    cout<<"== time: "<<t2-t1<<" sec\n";
-    cout << t2 - t1 << ",";
+//    cout << t2 - t1 << ",";
 #endif
 
 //    cout<<"\ncomputing DC for all vertices...\n";
@@ -221,6 +222,14 @@ int main(int argc, char * argv[])
     if (run_num==0) run_num = 1;
     double elapse_time = 0;
     
+    //Scale the thread num from 1 to 2^10
+    for (unsigned j = 0; j < 11; j++)
+    {
+        //reset elapse_time for each thread num config
+        elapse_time = 0;
+        threadnum = (int) pow(2, j);
+        cout << threadnum << ",";
+            
     for (unsigned i=0;i<run_num;i++)
     {
         // Degree Centrality
@@ -235,7 +244,10 @@ int main(int argc, char * argv[])
         elapse_time += t2-t1;
         if ((i+1)<run_num) reset_graph(graph);
     }
-
+        cout << loading_time << "," << elapse_time/run_num << endl;
+        //after each run, reset graph
+        reset_graph(graph);
+    }
     uint64_t indegree_max, indegree_min, outdegree_max, outdegree_min;
     degree_analyze(graph, indegree_max, indegree_min, outdegree_max, outdegree_min);
 
@@ -244,7 +256,7 @@ int main(int argc, char * argv[])
 //        <<"]  outDegree[Max-"<<outdegree_max<<" Min-"<<outdegree_min
 //        <<"]"<<endl;
 #ifndef ENABLE_VERIFY
-    cout << elapse_time/run_num << "\n";
+//    cout << elapse_time/run_num << "\n";
 //    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
 //    if (threadnum == 1)
 //        perf.print();
