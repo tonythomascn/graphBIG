@@ -1,18 +1,18 @@
 #!/bin/bash
-declare -a dataset=("1k" "10k" "100k" "1000k" "CA_RoadNet" "Knowledge_Repo" "Watson_Gene")
+#This script searches all the dataset dir within the data_dir
+#Load the edge and vertices within
+data_dir=$HOME/graph_data/friendster
 
 rm -rf log
 mkdir -p log
-for data in "${dataset[@]}" ;
+for data in "$data_dir"/*
 do
-  touch log/$data.csv
-  echo "threadnum,loadingtime,time" > log/$data.csv
-  for var in 1 2 4 8 16 32 64 128 256 512 ;
-  do
-      ./bfs --threadnum $var \
-      --dataset $HOME/graph_data/friendster/$data \
-      >> log/$data.csv ;
-  done
+  sub=${data##*/}
+  touch log/$sub.csv
+  echo "threadnum,loadingtime,time" > log/$sub.csv
+  ./bfs \
+  --dataset $data \
+  >> log/$sub.csv ;
 done
 
 tar czf bfs.tar.gz log/ 
