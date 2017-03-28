@@ -273,8 +273,6 @@ int main(int argc, char * argv[])
         elapse_time += t2-t1;
     }
         cout << loading_time << "," << elapse_time/run_num << endl;
-        //after each run, reset graph
-        reset_graph(graph);
     }
 
 //    cout<<"Page Rank finish \n";
