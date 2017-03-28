@@ -1,18 +1,23 @@
 #!/bin/bash
-#declare -a dataset=("1k" "10k" "100k" "1000k" "500M" "1G" "2G" "4G" "8G")
-declare -a dataset=("1k" "10k" "100k" "1000k" "CA_RoadNet" "Knowledge_Repo" "Watson_Gene")
+#This script searches all the dataset dir within the data_dir
+#Load the edge and vertices within
+data_dir=$HOME/graph_data/friendster
 declare -a prg=("kcore")
  
-for prog in "${prg[@]}" ;
+for prog in "${prg[@]}"
 do
     rm -rf log$prog
     mkdir -p log$prog
-    for data in "${dataset[@]}" ;
+    for data in "$data_dir"/*
     do
-      touch log$prog/$data.csv
-      echo "loadingtime,time" > log$prog/$data.csv
-      ./$prog --dataset $HOME/graph_data/friendster/$data >> log$prog/$data.csv ;
+       sub=${data##*/}
+       touch log$prog/$sub.csv
+       echo "loadingtime,h2dtime,d2htime,kerneltime,time" > log$prog/$sub.csv
+       ./$prog \
+       --dataset $data \
+       >> log$prog/$sub.csv ;
     done
 done
+
 
 tar czf kc_gpu.tar.gz log*
