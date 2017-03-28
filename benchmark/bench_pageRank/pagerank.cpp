@@ -204,7 +204,7 @@ int main(int argc, char * argv[])
 
     size_t threadnum, maxiter;
     arg.get_value("threadnum",threadnum);
-    cout << threadnum << ",";
+//    cout << threadnum << ",";
     arg.get_value("maxiter",maxiter);
 #ifdef SIM
     arg.get_value("beginiter",beginiter);
@@ -236,8 +236,9 @@ int main(int argc, char * argv[])
     size_t edge_num = graph.num_edges();
     t2 = timer::get_usec();
 //    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";
+    double loading_time = t2 - t1;
 #ifndef ENABLE_VERIFY
-    cout << t2 - t1 << ",";
+//    cout << t2 - t1 << ",";
 //    cout<<"== time: "<<t2-t1<<" sec\n";
 #endif
 
@@ -250,7 +251,15 @@ int main(int argc, char * argv[])
     unsigned run_num = ceil(perf.get_event_cnt() / (double)DEFAULT_PERF_GRP_SZ);
     if (run_num==0) run_num = 1;
     double elapse_time = 0;
-    
+  
+    //Scale the thread num from 1 to 2^10
+    for (unsigned j = 0; j < 11; j++)
+    {
+        //reset elapse_time for each thread num config
+        elapse_time = 0;
+        threadnum = (int) pow(2, j);
+        cout << threadnum << ",";
+        
     for (unsigned i=0;i<run_num;i++)
     {
         init_pagerank(graph, damp, threadnum);
@@ -263,12 +272,15 @@ int main(int argc, char * argv[])
         t2 = timer::get_usec();
         elapse_time += t2-t1;
     }
-
+        cout << loading_time << "," << elapse_time/run_num << endl;
+        //after each run, reset graph
+        reset_graph(graph);
+    }
 
 //    cout<<"Page Rank finish \n";
 //    cout<<"== iteration #: "<<itercnt<<endl;
 #ifndef ENABLE_VERIFY
-    cout << elapse_time/run_num<<"\n";
+//    cout << elapse_time/run_num<<"\n";
 //    cout<<"== time: "<<elapse_time/run_num<<" sec\n";
 //    if (threadnum == 1)
 //        perf.print();
