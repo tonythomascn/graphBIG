@@ -258,6 +258,9 @@ void cuda_SSSP(uint64_t * vertexlist,
 
 //    printf("== iteration #: %d\n", curr);
 #ifndef ENABLE_VERIFY
+printf("%f,", h2d_copy_time / 1000);
+printf("%f,", d2h_copy_time / 1000);
+printf("%f,", kernel_time / 1000);
 //    printf("== host->device copy time: %f ms\n", h2d_copy_time);
 //    printf("== device->host copy time: %f ms\n", d2h_copy_time);
 //    printf("== kernel time: %f ms\n", kernel_time);
