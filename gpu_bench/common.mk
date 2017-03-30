@@ -89,6 +89,10 @@ CUB:
 		echo "Linking with external CUB library"; \
 	fi
 
+script: ${TARGET} reset_generated_dir
+	@if [ -n "${TARGET}" ]; then \
+          ./run 2>&1; \
+        fi
 
 include ${ROOT}/common.mk
 
