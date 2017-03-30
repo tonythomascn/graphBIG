@@ -15,4 +15,4 @@ do
   >> log/$sub.csv ;
 done
 
-tar czf cc.tar.gz log/
+tar czf cc_icc.tar.gz log/
