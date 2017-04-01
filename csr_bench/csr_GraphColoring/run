@@ -1,18 +1,43 @@
 #!/bin/bash
-declare -a dataset=("1k" "10k" "100k" "1000k" "CA_RoadNet" "Knowledge_Repo" "Watson_Gene")
+#This script searches all the dataset dir within the data_dir
+#Load the edge and vertices within
+data_dir=$HOME/graph_data/friendster
 
-rm -rf log
-mkdir -p log
-for data in "${dataset[@]}"
+function usage
+{
+    echo "usage: run [gcc/icc] [csv/csr] [program]"
+}
+if [ -z "$1" ]
+  then
+    usage
+    exit
+fi
+
+if [ -z "$2" ]
+  then
+    usage
+    exit
+fi
+
+if [ -z "$3" ]
+  then
+    usage
+    exit
+fi
+timestamp=$(date +"%Y%m%d%H%M%S")
+
+
+log=$3_$1_$2_$timestamp.csv
+touch $log
+for data in "$data_dir"/*
 do
-  touch log/$data.csv
-  echo "threadnum,loadingtime,time" > log/$data.csv
-  for var in 1 2 4 8 16 32 64 128 256 512
+  dataname=${data##*/}
+  echo "threadnum,loadingtime,time,$dataname" >> $log
+  for var in 1 2 4 8 16 32 64 128 256 512 1024
   do
-    ./csr_graphcoloring --threadnum $var \
-    --dataset $HOME/graph_data/friendster/$data \
-    >> log/$data.csv ;
+  ./$3 --threadnum $var\
+  --dataset $data \
+  >> $log ;
   done
 done
 
-tar czf gc_csr_gcc.tar.gz log* 

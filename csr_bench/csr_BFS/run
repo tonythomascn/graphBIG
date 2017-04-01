@@ -33,7 +33,7 @@ for data in "$data_dir"/*
 do
   dataname=${data##*/}
   echo "threadnum,loadingtime,time,$dataname" >> $log
-  for var in 1 2 4 8 16 32 64 128 256 512
+  for var in 1 2 4 8 16 32 64 128 256 512 1024
   do
   ./$3 --threadnum $var\
   --dataset $data \
