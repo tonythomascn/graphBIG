@@ -8,13 +8,13 @@ timestamp=$(date +"%Y%m%d%H%M%S")
 
 for prog in "${prg[@]}"
 do
-    log=gpu_$prog_$timestamp.csv
+    log=gpu_${prog}_${timestamp}.csv
     touch $log
-    echo -n "h2dtime,d2htime,kerneltime,time" > $log
+    echo "data,h2dtime,d2htime,kerneltime,time" > $log
     for data in "$data_dir"/*
     do
        dataname=${data##*/}
-       echo ",$dataname" >> $log
+       echo -n "${dataname}," >> $log
        ./$prog \
        --dataset $data \
        >> $log ;
