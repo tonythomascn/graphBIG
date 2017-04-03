@@ -4,19 +4,19 @@
 data_dir=$HOME/graph_data/friendster
 declare -a prg=("gc_data_thread_centric" "gc_data_warp_centric" "gc_topo_thread_centric" "gc_topo_warp_centric")
 
+timestamp=$(date +"%Y%m%d%H%M%S")
+
 for prog in "${prg[@]}"
 do
-    rm -rf log$prog
-    mkdir -p log$prog
+    log=gpu_$prog_$timestamp.csv
+    touch $log
+    echo -n "h2dtime,d2htime,kerneltime,time" > $log
     for data in "$data_dir"/*
     do
-       sub=${data##*/}
-       touch log$prog/$sub.csv
-       echo "loadingtime,h2dtime,d2htime,kerneltime,time" > log$prog/$sub.csv
+       dataname=${data##*/}
+       echo ",$dataname" >> $log
        ./$prog \
        --dataset $data \
-       >> log$prog/$sub.csv ;
+       >> $log ;
     done
 done
-
-tar czf gc_gpu.tar.gz log*
