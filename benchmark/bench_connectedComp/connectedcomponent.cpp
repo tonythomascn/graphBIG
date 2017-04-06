@@ -299,7 +299,7 @@ int main(int argc, char * argv[])
     double elapse_time = 0;
     
     //Scale the thread num from 1 to 2^10
-    for (unsigned j = 0; j < 11; j++)
+    for (unsigned j = 0; j < 5; j++)
     {
         //reset elapse_time for each thread num config
         elapse_time = 0;
