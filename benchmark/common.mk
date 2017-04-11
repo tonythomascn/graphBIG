@@ -1,8 +1,9 @@
-CXX_FLAGS+=-std=c++0x -Wall -Wno-deprecated
-INCLUDE+=-I${ROOT}/common -I${ROOT}/openG
-EXTRA_CXX_FLAGS+=-L${ROOT}/tools/lib
+CXX=icpc
+CXX_FLAGS+=-std=c++0x -Wall -Wno-deprecated -xMIC-AVX512
+INCLUDE+=-I${ROOT}/common -I${ROOT}/openG -I/opt/intel/vtune_amplifier_xe/include
+EXTRA_CXX_FLAGS+=-L${ROOT}/tools/lib -L/opt/intel/vtune_amplifier_xe/lib64
 
-LIBS=${EXTRA_LIBS}
+LIBS=${EXTRA_LIBS} -littnotify
 
 ifeq (${PFM},0)
   CXX_FLAGS += -DNO_PFM
@@ -14,7 +15,7 @@ endif
 ifeq (${DEBUG},1)
   CXX_FLAGS += -DDEBUG -g -O0
 else
-  CXX_FLAGS +=-O3
+  CXX_FLAGS +=-O3 -g
 endif
 
 ifeq (${OMP},0)
