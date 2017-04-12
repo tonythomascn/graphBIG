@@ -281,12 +281,18 @@ int main(int argc, char * argv[])
 
     graph_t graph;
     double t1, t2;
-
+    
+    __itt_domain* pD = __itt_domain_create( "bfs" );
+ 
+    pD->flags = 1; /* enable domain */
+    
 //    cout<<"loading data... \n";    
     t1 = timer::get_usec();
     string vfile = path + "/vertex.csv";
     string efile = path + "/edge.csv";
-
+    
+    
+     __itt_frame_begin_v3(pD, NULL);
 #ifndef EDGES_ONLY
     if (graph.load_csv_vertices(vfile, true, separator, 0) == -1)
         return -1;
@@ -296,7 +302,9 @@ int main(int argc, char * argv[])
     if (graph.load_csv_edges(efile, true, separator, 0, 1) == -1)
         return -1;
 #endif
-
+    __itt_frame_end_v3(pD, NULL);
+    
+    
     size_t vertex_num = graph.vertex_num();
     size_t edge_num = graph.edge_num();
     t2 = timer::get_usec();
@@ -316,9 +324,7 @@ int main(int argc, char * argv[])
     if (run_num==0) run_num = 1;
     double elapse_time = 0;
 
-    __itt_domain* pD = __itt_domain_create( "bfs" );
- 
-    pD->flags = 1; /* enable domain */
+
     
     for (unsigned i=0;i<run_num;i++)
     {
