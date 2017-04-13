@@ -292,7 +292,6 @@ int main(int argc, char * argv[])
     string efile = path + "/edge.csv";
     
     
-     __itt_frame_begin_v3(pD, NULL);
 #ifndef EDGES_ONLY
     if (graph.load_csv_vertices(vfile, true, separator, 0) == -1)
         return -1;
@@ -302,7 +301,6 @@ int main(int argc, char * argv[])
     if (graph.load_csv_edges(efile, true, separator, 0, 1) == -1)
         return -1;
 #endif
-    __itt_frame_end_v3(pD, NULL);
     
     
     size_t vertex_num = graph.vertex_num();
