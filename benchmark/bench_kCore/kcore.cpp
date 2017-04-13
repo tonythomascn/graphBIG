@@ -17,6 +17,8 @@
 #include "SIM.h"
 #endif
 
+#include "ittnotify.h"
+
 using namespace std;
 
 class vertex_property
@@ -213,10 +215,15 @@ int main(int argc, char * argv[])
     if (run_num==0) run_num = 1;
     double elapse_time = 0;
     
+    __itt_domain* pD = __itt_domain_create( "bfs" );
+ 
+    pD->flags = 1; /* enable domain */
+    
     for (unsigned i=0;i<run_num;i++)
     {
         seq_init(graph);
 
+         __itt_frame_begin_v3(pD, NULL);
         t1 = timer::get_usec();
 
         if (threadnum==1)
@@ -224,6 +231,8 @@ int main(int argc, char * argv[])
         else
             parallel_kcore(graph, k, threadnum, perf_multi, i);
         t2 = timer::get_usec();
+        __itt_frame_end_v3(pD, NULL);
+        
         elapse_time += t2-t1;
         if ((i+1)<run_num) reset_graph(graph);
     }
