@@ -362,6 +362,9 @@ int main(int argc, char * argv[])
     t2 = timer::get_usec();
 //    cout<<"== "<<vertex_num<<" vertices  "<<edge_num<<" edges\n";      
     double loading_time = t2 - t1;
+    
+    int best_threadn = 0;
+    double best_exetime = -1;
 #ifndef ENABLE_VERIFY
 //    cout << t2 - t1 << ",";
 //    cout<<"== time: "<<t2-t1<<" sec\n";
@@ -410,9 +413,20 @@ int main(int argc, char * argv[])
         if ((i+1)<run_num) reset_graph(graph);
     }
         cout << loading_time << "," << elapse_time/run_num << endl;
+        if (-1 == best_exetime){
+            best_exetime = elapse_time/run_num;
+            best_threadn = threadnum;
+        }
+        else{
+            if (elapse_time/run_num < best_exetime){
+                best_exetime = elapse_time/run_num;
+                best_threadn = threadnum;
+            }
+        }
         //after each run, reset graph
         reset_graph(graph);
     }
+    cout << best_threadn << "," << loading_time << "," << best_exetime << ", " << best_exetime << endl;
 //    cout<<"== total triangle count: "<<tcount<<endl;
 #ifndef ENABLE_VERIFY
 //    cout << elapse_time/run_num<<"\n";
