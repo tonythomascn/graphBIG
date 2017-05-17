@@ -314,6 +314,9 @@ int main(int argc, char * argv[])
     if (run_num==0) run_num = 1;
     double elapse_time = 0;
     
+    int best_threadn = 0;
+    double best_exetime = -1;
+    
     //Scale the thread num from 1 to 2^10
     for (unsigned j = 0; j < 11; j++)
     {
@@ -336,9 +339,20 @@ int main(int argc, char * argv[])
           if ((i+1)<run_num) reset_graph(graph);
         }
         cout << loading_time << "," << elapse_time/run_num << endl;
+        if (-1 == best_exetime){
+            best_exetime = elapse_time/run_num;
+            best_threadn = threadnum;
+        }
+        else{
+            if (elapse_time/run_num < best_exetime){
+                best_exetime = elapse_time/run_num;
+                best_threadn = threadnum;
+            }
+        }
         //after each run, reset graph
         reset_graph(graph);
     }
+    cout << best_threadn << "," << best_exetime << ", " << best_exetime << endl;
 //    cout<<"BFS finish: \n";
 
 #ifndef ENABLE_VERIFY
