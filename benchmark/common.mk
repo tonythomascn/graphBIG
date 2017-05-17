@@ -1,4 +1,5 @@
-CXX_FLAGS+=-std=c++0x -Wall -Wno-deprecated
+CXX=icpc
+CXX_FLAGS+=-std=c++0x -Wall -Wno-deprecated -xMIC-AVX512
 INCLUDE+=-I${ROOT}/common -I${ROOT}/openG
 EXTRA_CXX_FLAGS+=-L${ROOT}/tools/lib
 
