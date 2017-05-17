@@ -251,7 +251,9 @@ int main(int argc, char * argv[])
     unsigned run_num = ceil(perf.get_event_cnt() / (double)DEFAULT_PERF_GRP_SZ);
     if (run_num==0) run_num = 1;
     double elapse_time = 0;
-  
+      
+    int best_threadn = 0;
+    double best_exetime = -1;
     //Scale the thread num from 1 to 2^10
     for (unsigned j = 0; j < 11; j++)
     {
@@ -273,6 +275,17 @@ int main(int argc, char * argv[])
         elapse_time += t2-t1;
     }
         cout << loading_time << "," << elapse_time/run_num << endl;
+        if (-1 == best_exetime){
+            best_exetime = elapse_time/run_num;
+            best_threadn = threadnum;
+        }
+        else{
+            if (elapse_time/run_num < best_exetime){
+                best_exetime = elapse_time/run_num;
+                best_threadn = threadnum;
+            }
+        }
+         cout << best_threadn << "," << loading_time << "," << best_exetime << ", " << best_exetime << endl;
     }
 
 //    cout<<"Page Rank finish \n";
