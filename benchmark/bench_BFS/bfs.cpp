@@ -352,7 +352,7 @@ int main(int argc, char * argv[])
         //after each run, reset graph
         reset_graph(graph);
     }
-    cout << best_threadn << "," << best_exetime << ", " << best_exetime << endl;
+    cout << best_threadn << "," << loading_time << "," << best_exetime << ", " << best_exetime << endl;
 //    cout<<"BFS finish: \n";
 
 #ifndef ENABLE_VERIFY
