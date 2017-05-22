@@ -285,9 +285,8 @@ int main(int argc, char * argv[])
                 best_threadn = threadnum;
             }
         }
-         cout << best_threadn << "," << loading_time << "," << best_exetime << ", " << best_exetime << endl;
     }
-
+    cout << best_threadn << "," << loading_time << "," << best_exetime << ", " << best_exetime << endl;
 //    cout<<"Page Rank finish \n";
 //    cout<<"== iteration #: "<<itercnt<<endl;
 #ifndef ENABLE_VERIFY
