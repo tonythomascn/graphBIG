@@ -94,6 +94,12 @@ void parallel_bfs(graph_t& g, size_t root, unsigned threadnum, gBenchPerf_multi 
     vector<vector<uint64_t> > global_output_tasks(threadnum*threadnum);
 
     bool stop = false;
+    __itt_domain* pD = __itt_domain_create( "bfs" );
+ 
+    pD->flags = 1; /* enable domain */
+    
+    //analyze this as a frame
+    __itt_frame_begin_v3(pD, NULL);
     #pragma omp parallel num_threads(threadnum) shared(stop,global_input_tasks,global_output_tasks,perf) 
     {
         unsigned tid = omp_get_thread_num();
@@ -159,7 +165,7 @@ void parallel_bfs(graph_t& g, size_t root, unsigned threadnum, gBenchPerf_multi 
 #endif       
         perf.stop(tid, perf_group);
     }
-
+    __itt_frame_end_v3(pD, NULL);
 }
 
 void bfs(graph_t& g, size_t root, BFSVisitor& vis, gBenchPerf_event & perf, int perf_group) 
@@ -278,14 +284,8 @@ int main(int argc, char * argv[])
     arg.get_value("enditer",enditer);
 #endif
 
-
     graph_t graph;
     double t1, t2;
-    
-    __itt_domain* pD = __itt_domain_create( "bfs" );
- 
-    pD->flags = 1; /* enable domain */
-    
 //    cout<<"loading data... \n";    
     t1 = timer::get_usec();
     string vfile = path + "/vertex.csv";
@@ -321,13 +321,10 @@ int main(int argc, char * argv[])
     unsigned run_num = ceil(perf.get_event_cnt() /(double) DEFAULT_PERF_GRP_SZ);
     if (run_num==0) run_num = 1;
     double elapse_time = 0;
-
-
     
     for (unsigned i=0;i<run_num;i++)
     {
-        //analyze this as a frame
-        __itt_frame_begin_v3(pD, NULL);
+        
         t1 = timer::get_usec();
 
         if (threadnum==1)
@@ -336,7 +333,7 @@ int main(int argc, char * argv[])
             parallel_bfs(graph, root, threadnum, perf_multi, i);
 
         t2 = timer::get_usec();
-        __itt_frame_end_v3(pD, NULL);
+        
 
         elapse_time += t2-t1;
         if ((i+1)<run_num) reset_graph(graph);
