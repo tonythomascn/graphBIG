@@ -1,23 +1,22 @@
 #!/bin/bash
 #This script searches all the dataset dir within the data_dir
 #Load the edge and vertices within
-data_dir=$HOME/graph_data/friendster
+data_dir=$HOME/graph_data/jesun
 declare -a prg=("kcore")
- 
+
+timestamp=$(date +"%Y%m%d%H%M%S")
+
 for prog in "${prg[@]}"
 do
-    rm -rf log$prog
-    mkdir -p log$prog
+    log=gpu_${prog}_${timestamp}.csv
+    touch $log
+    echo "data,h2dtime,d2htime,kerneltime,time" > $log
     for data in "$data_dir"/*
     do
-       sub=${data##*/}
-       touch log$prog/$sub.csv
-       echo "loadingtime,h2dtime,d2htime,kerneltime,time" > log$prog/$sub.csv
+       dataname=${data##*/}
+       echo -n "${dataname}," >> $log
        ./$prog \
        --dataset $data \
-       >> log$prog/$sub.csv ;
+       >> $log ;
     done
 done
-
-
-tar czf kc_gpu.tar.gz log*

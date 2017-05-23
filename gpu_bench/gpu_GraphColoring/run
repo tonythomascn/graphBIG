@@ -1,7 +1,7 @@
 #!/bin/bash
 #This script searches all the dataset dir within the data_dir
 #Load the edge and vertices within
-data_dir=$HOME/graph_data/friendster
+data_dir=$HOME/graph_data/jesun
 declare -a prg=("gc_data_thread_centric" "gc_data_warp_centric" "gc_topo_thread_centric" "gc_topo_warp_centric")
 
 timestamp=$(date +"%Y%m%d%H%M%S")

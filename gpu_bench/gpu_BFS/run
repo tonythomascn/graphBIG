@@ -1,7 +1,8 @@
 #!/bin/bash
 #This script searches all the dataset dir within the data_dir
 #Load the edge and vertices within
-data_dir=$HOME/graph_data/friendster
+#data_dir=$HOME/graph_data/friendster
+data_dir=$HOME/graph_data/jesun
 declare -a prg=("bfs_data_thread_centric" "bfs_data_warp_centric" "bfs_topo_atomic" "bfs_topo_frontier" "bfs_topo_thread_centric" "bfs_topo_unroll" "bfs_topo_warp_centric")
 
 timestamp=$(date +"%Y%m%d%H%M%S")
@@ -16,6 +17,7 @@ do
        dataname=${data##*/}
        echo -n "${dataname}," >> $log
        ./$prog \
+       --root 999 \
        --dataset $data \
        >> $log ;
     done
